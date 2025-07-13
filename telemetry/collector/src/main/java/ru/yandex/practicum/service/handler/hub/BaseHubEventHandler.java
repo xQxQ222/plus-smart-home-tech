@@ -27,7 +27,7 @@ public abstract class BaseHubEventHandler<T extends SpecificRecordBase> implemen
                 .build();
         kafkaClient.getProducer()
                 .send(new ProducerRecord<>(
-                        topicsNames.getHubsTopic(),
+                        topicsNames.getHubs(),
                         null,
                         event.getTimestamp().toEpochMilli(),
                         event.getHubId(),

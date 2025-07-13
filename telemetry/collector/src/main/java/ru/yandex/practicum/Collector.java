@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableConfigurationProperties
 @EnableScheduling
-public class CollectorApplication {
+public class Collector {
     public static void main(String[] args) {
-        SpringApplication.run(CollectorApplication.class, args);
+        SpringApplication.run(Collector.class, args);
     }
 }

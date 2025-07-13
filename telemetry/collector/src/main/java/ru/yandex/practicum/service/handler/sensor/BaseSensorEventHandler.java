@@ -28,7 +28,7 @@ public abstract class BaseSensorEventHandler<T extends SpecificRecordBase> imple
                 .build();
         kafkaClient.getProducer()
                 .send(new ProducerRecord<>(
-                        topicsNames.getHubsTopic(),
+                        topicsNames.getSensors(),
                         null,
                         event.getTimestamp().toEpochMilli(),
                         event.getHubId(),
