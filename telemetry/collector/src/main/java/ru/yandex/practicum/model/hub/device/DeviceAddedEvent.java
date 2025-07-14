@@ -10,7 +10,7 @@ import ru.yandex.practicum.model.hub.HubEventType;
 @Setter
 @ToString(callSuper = true)
 public class DeviceAddedEvent extends HubEvent {
-    private S tring id;
+    private String id;
     private DeviceType deviceType;
 
     @Override
