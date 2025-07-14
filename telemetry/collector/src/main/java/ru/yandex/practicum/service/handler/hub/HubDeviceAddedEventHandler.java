@@ -23,6 +23,7 @@ public class HubDeviceAddedEventHandler extends BaseHubEventHandler<DeviceAddedE
         return DeviceAddedEventAvro.newBuilder()
                 .setId(event.getId())
                 .setType(getAvroDeviceType(event.getDeviceType()))
+                .setHubId(event.getHubId())
                 .build();
     }
 
