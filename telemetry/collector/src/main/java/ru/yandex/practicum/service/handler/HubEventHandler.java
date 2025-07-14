@@ -5,5 +5,6 @@ import ru.yandex.practicum.model.hub.HubEventType;
 
 public interface HubEventHandler {
     HubEventType getMessageType();
+
     void handle(HubEvent event);
 }
