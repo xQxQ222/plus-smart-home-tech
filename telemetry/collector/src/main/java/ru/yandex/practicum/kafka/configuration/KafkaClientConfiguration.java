@@ -9,7 +9,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.VoidSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.yandex.practicum.kafka.serializer.GeneralAvroSerializer;
+import ru.yandex.practicum.kafka.GeneralAvroSerializer;
 
 import java.util.Properties;
 
@@ -35,8 +35,8 @@ public class KafkaClientConfiguration {
                 return null;
             }
 
-            @Override
             @PreDestroy
+            @Override
             public void stop() {
                 if (consumer != null) {
                     consumer.close();

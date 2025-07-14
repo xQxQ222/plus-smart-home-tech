@@ -20,6 +20,7 @@ public abstract class BaseHubEventHandler<T extends SpecificRecordBase> implemen
     @Override
     public void handle(HubEvent event) {
         T avroModel = toAvro(event);
+        log.trace("Данные события хаба переведены в avro: {}", avroModel);
         HubEventAvro hubEventAvro = HubEventAvro.newBuilder()
                 .setHubId(event.getHubId())
                 .setPayload(avroModel)

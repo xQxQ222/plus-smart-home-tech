@@ -20,6 +20,7 @@ public abstract class BaseSensorEventHandler<T extends SpecificRecordBase> imple
     @Override
     public void handle(SensorEvent event) {
         T avroData = toAvro(event);
+        log.trace("Данные для сенсора переведены в авро: {}", avroData);
         SensorEventAvro sensorEventAvro = SensorEventAvro.newBuilder()
                 .setHubId(event.getHubId())
                 .setId(event.getId())
