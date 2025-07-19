@@ -35,9 +35,7 @@ public class AggregatorServiceImpl implements AggregatorService {
             return Optional.of(sensorsSnapshot);
         } else {
             Optional<SensorsSnapshotAvro> updatedSnapshot = updateSnapshot(eventAvro);
-            if (updatedSnapshot.isPresent()) {
-                snapshots.put(hubId, updatedSnapshot.get());
-            }
+            updatedSnapshot.ifPresent(snapshotAvro -> snapshots.put(hubId, snapshotAvro));
             return updatedSnapshot;
         }
     }
@@ -62,7 +60,9 @@ public class AggregatorServiceImpl implements AggregatorService {
     public void handleRecord(ConsumerRecord<String, SpecificRecordBase> record, Producer<String, SpecificRecordBase> producer, String topic) {
         SensorEventAvro event = (SensorEventAvro) record.value();
         Optional<SensorsSnapshotAvro> snapshot = updateState(event);
+
         if (snapshot.isPresent()) {
+            log.info("Отправляем новый snapshot: {}", snapshot.get());
             producer.send(new ProducerRecord<>(
                     topic,
                     null,
@@ -88,7 +88,7 @@ public class AggregatorServiceImpl implements AggregatorService {
     }
 
     private Optional<SensorsSnapshotAvro> updateSnapshot(SensorEventAvro eventAvro) {
-        SensorsSnapshotAvro oldSnapshot = snapshots.get(eventAvro.getId());
+        SensorsSnapshotAvro oldSnapshot = snapshots.get(eventAvro.getHubId());
         String eventId = eventAvro.getId();
         SensorStateAvro oldState = oldSnapshot
                 .getSensorsState()
