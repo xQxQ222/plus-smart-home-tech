@@ -1,10 +1,10 @@
 package ru.yandex.practicum.service.handler.sensor;
 
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.KafkaClient;
+import ru.yandex.practicum.KafkaTopicsNames;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.TemperatureSensorProto;
-import ru.yandex.practicum.kafka.configuration.KafkaClient;
-import ru.yandex.practicum.kafka.configuration.KafkaTopicsNames;
 import ru.yandex.practicum.kafka.telemetry.event.TemperatureSensorAvro;
 
 @Component
