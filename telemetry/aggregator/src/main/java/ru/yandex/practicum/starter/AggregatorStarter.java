@@ -50,14 +50,12 @@ public class AggregatorStarter {
         } finally {
 
             try {
-                producer.flush();
                 consumer.commitSync();
 
             } finally {
                 log.info("Закрываем консьюмер");
-                consumer.close();
                 log.info("Закрываем продюсер");
-                producer.close();
+                kafkaClient.stop();
             }
         }
     }
