@@ -1,12 +1,12 @@
 package ru.yandex.practicum.service.handler.hub;
 
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.KafkaClient;
+import ru.yandex.practicum.KafkaTopicsNames;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionProto;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.ScenarioAddedEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.ScenarioConditionProto;
-import ru.yandex.practicum.kafka.configuration.KafkaClient;
-import ru.yandex.practicum.kafka.configuration.KafkaTopicsNames;
 import ru.yandex.practicum.kafka.telemetry.event.*;
 
 import java.util.List;
