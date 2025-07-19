@@ -1,4 +1,4 @@
-﻿package ru.yandex.practicum.starter;
+package ru.yandex.practicum.starter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,6 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.KafkaClient;
 import ru.yandex.practicum.KafkaTopicsNames;
-import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import ru.yandex.practicum.service.AggregatorServiceImpl;
 
 import java.time.Duration;
