@@ -23,11 +23,10 @@ public class AggregatorStarter {
     private final static Duration POLL_DURATION_TIMEOUT = Duration.ofMillis(1000);
 
     private final KafkaClient kafkaClient;
-    private Producer<String, SpecificRecordBase> producer;
-    private Consumer<String, SpecificRecordBase> consumer;
     private final KafkaTopicsNames topicsNames;
     private final AggregatorServiceImpl aggregatorService;
-
+    private Producer<String, SpecificRecordBase> producer;
+    private Consumer<String, SpecificRecordBase> consumer;
 
     public void start() {
         consumer = kafkaClient.getConsumer();
