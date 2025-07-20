@@ -66,7 +66,7 @@ public class SnapshotServiceImpl implements SnapshotService {
         return false;
     }
 
-    private boolean evaluateCondition(int sensorValue, ConditionOperation operation, int targetValue) {
+    private boolean handleOperation(int sensorValue, ConditionOperation operation, int targetValue) {
         return switch (operation) {
             case EQUALS -> sensorValue == targetValue;
             case GREATER_THAN -> sensorValue > targetValue;
@@ -77,40 +77,36 @@ public class SnapshotServiceImpl implements SnapshotService {
     private boolean checkConditionSensorState(SensorStateAvro sensorState, Condition condition) {
         boolean result = false;
         ConditionType conditionType = condition.getType();
+        Object data = sensorState.getData();
         switch (conditionType) {
             case TEMPERATURE:
-                if (sensorState.getData() instanceof TemperatureSensorAvro tempSensor) {
-                    result = evaluateCondition(tempSensor.getTemperatureC(), condition.getOperation(), condition.getValue());
-                } else if (sensorState.getData() instanceof ClimateSensorAvro climateSensor) {
-                    result = evaluateCondition(climateSensor.getTemperatureC(), condition.getOperation(), condition.getValue());
+                if (data instanceof TemperatureSensorAvro tempSensor) {
+                    result = handleOperation(tempSensor.getTemperatureC(), condition.getOperation(), condition.getValue());
+                } else if (data instanceof ClimateSensorAvro climateSensor) {
+                    result = handleOperation(climateSensor.getTemperatureC(), condition.getOperation(), condition.getValue());
                 }
                 break;
             case HUMIDITY:
-                if (sensorState.getData() instanceof ClimateSensorAvro climateSensor) {
-                    result = evaluateCondition(climateSensor.getHumidity(), condition.getOperation(), condition.getValue());
-                }
+                ClimateSensorAvro climateSensorHumidity = (ClimateSensorAvro) data;
+                result = handleOperation(climateSensorHumidity.getHumidity(), condition.getOperation(), condition.getValue());
                 break;
             case CO2LEVEL:
-                if (sensorState.getData() instanceof ClimateSensorAvro climateSensor) {
-                    result = evaluateCondition(climateSensor.getCo2Level(), condition.getOperation(), condition.getValue());
-                }
+                ClimateSensorAvro climateSensorCO2 = (ClimateSensorAvro) data;
+                result = handleOperation(climateSensorCO2.getCo2Level(), condition.getOperation(), condition.getValue());
                 break;
             case LUMINOSITY:
-                if (sensorState.getData() instanceof LightSensorAvro lightSensor) {
-                    result = evaluateCondition(lightSensor.getLuminosity(), condition.getOperation(), condition.getValue());
-                }
+                LightSensorAvro lightSensor = (LightSensorAvro) data;
+                result = handleOperation(lightSensor.getLuminosity(), condition.getOperation(), condition.getValue());
                 break;
             case MOTION:
-                if (sensorState.getData() instanceof MotionSensorAvro motionSensor) {
-                    int motionValue = motionSensor.getMotion() ? 1 : 0;
-                    result = evaluateCondition(motionValue, condition.getOperation(), condition.getValue());
-                }
+                MotionSensorAvro motionSensor = (MotionSensorAvro) data;
+                int motionValue = motionSensor.getMotion() ? 1 : 0;
+                result = handleOperation(motionValue, condition.getOperation(), condition.getValue());
                 break;
             case SWITCH:
-                if (sensorState.getData() instanceof SwitchSensorAvro switchSensor) {
-                    int switchState = switchSensor.getState() ? 1 : 0;
-                    result = evaluateCondition(switchState, condition.getOperation(), condition.getValue());
-                }
+                SwitchSensorAvro switchSensor = (SwitchSensorAvro) data;
+                int switchState = switchSensor.getState() ? 1 : 0;
+                result = handleOperation(switchState, condition.getOperation(), condition.getValue());
                 break;
             default:
                 log.error("Неизвестный тип condition type: {}", condition.getType());
