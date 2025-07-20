@@ -52,16 +52,20 @@ public class HubServiceImpl implements HubService {
 
         List<Condition> conditions = scenarioAdded.getConditions().stream()
                 .map(conditionEvent -> Condition.builder()
+                        .sensorId(conditionEvent.getSensorId())
                         .type(ConditionType.valueOf(conditionEvent.getType().name()))
                         .operation(ConditionOperation.valueOf(conditionEvent.getOperation().name()))
                         .value(convertToInteger(conditionEvent.getValue()))
+                        .scenario(scenario)
                         .build())
                 .toList();
 
         List<Action> actions = scenarioAdded.getActions().stream()
                 .map(actionEvent -> Action.builder()
+                        .sensorId(actionEvent.getSensorId())
                         .type(ActionType.valueOf(actionEvent.getType().name()))
                         .value(actionEvent.getValue() != null ? actionEvent.getValue() : 0)
+                        .scenario(scenario)
                         .build())
                 .toList();
 

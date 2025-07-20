@@ -32,7 +32,7 @@ public class SnapshotProcessor implements Runnable {
     private final KafkaTopicsNames topicsNames;
     private final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
     private Consumer<String, SpecificRecordBase> consumer;
-    private SnapshotService snapshotService;
+    private final SnapshotService snapshotService;
 
     @Override
     public void run() {

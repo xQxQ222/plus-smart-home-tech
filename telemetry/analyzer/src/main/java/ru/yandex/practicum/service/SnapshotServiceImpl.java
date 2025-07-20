@@ -4,9 +4,9 @@ import com.google.protobuf.Timestamp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
-import org.apache.kafka.clients.KafkaClient;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.KafkaClient;
 import ru.yandex.practicum.KafkaTopicsNames;
 import ru.yandex.practicum.grpc.HubRouterClient;
 import ru.yandex.practicum.grpc.telemetry.event.ActionTypeProto;
@@ -28,10 +28,10 @@ import java.util.List;
 @Slf4j
 public class SnapshotServiceImpl implements SnapshotService {
 
-    private KafkaClient kafkaClient;
-    private KafkaTopicsNames topicsNames;
-    private HubRouterClient hubRouterClient;
-    private ScenarioRepository scenarioRepository;
+    private final KafkaClient kafkaClient;
+    private final KafkaTopicsNames topicsNames;
+    private final HubRouterClient hubRouterClient;
+    private final ScenarioRepository scenarioRepository;
 
     @Override
     public void handleRecord(ConsumerRecord<String, ? extends SpecificRecordBase> record) {
