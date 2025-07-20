@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HubRouter {
+public class HubRouterApplication {
     public static void main(String[] args) {
-        SpringApplication.run(HubRouter.class, args);
+        SpringApplication.run(HubRouterApplication.class, args);
     }
 }

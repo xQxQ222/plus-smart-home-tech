@@ -117,12 +117,11 @@ public class SnapshotServiceImpl implements SnapshotService {
     private void executeActions(List<Action> actions, String hubId, Instant timestamp) {
         for (Action action : actions) {
             DeviceActionRequest request = buildRequest(action, timestamp);
-            hubRouterClient.getHubRouterClient().handleDeviceAction(request);
+            hubRouterClient.handleAction(request);
         }
     }
 
     private DeviceActionRequest buildRequest(Action action, Instant timestamp) {
-
         DeviceActionProto.Builder builderAction = DeviceActionProto.newBuilder();
         Scenario actionScenario = action.getScenario();
         DeviceActionRequest.Builder builder = DeviceActionRequest.newBuilder()
