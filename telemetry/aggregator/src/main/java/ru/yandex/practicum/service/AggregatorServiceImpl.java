@@ -3,12 +3,9 @@ package ru.yandex.practicum.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
-import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.TopicPartition;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorStateAvro;
@@ -23,7 +20,7 @@ import java.util.Optional;
 @Slf4j
 public class AggregatorServiceImpl implements AggregatorService {
 
-    private final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
+
     private final Map<String, SensorsSnapshotAvro> snapshots = new HashMap<>();
 
     @Override
@@ -37,22 +34,6 @@ public class AggregatorServiceImpl implements AggregatorService {
             Optional<SensorsSnapshotAvro> updatedSnapshot = updateSnapshot(eventAvro);
             updatedSnapshot.ifPresent(snapshotAvro -> snapshots.put(hubId, snapshotAvro));
             return updatedSnapshot;
-        }
-    }
-
-    @Override
-    public void manageOffsets(ConsumerRecord<String, SpecificRecordBase> record, int count, Consumer<String, SpecificRecordBase> consumer) {
-        currentOffsets.put(
-                new TopicPartition(record.topic(), record.partition()),
-                new OffsetAndMetadata(record.offset() + 1)
-        );
-
-        if (count % 10 == 0) {
-            consumer.commitAsync(currentOffsets, (offsets, exception) -> {
-                if (exception != null) {
-                    log.warn("Error while commiting offsets: {}", offsets, exception);
-                }
-            });
         }
     }
 
