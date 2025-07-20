@@ -1,4 +1,4 @@
-package ru.yandex.practicum.controller;
+package ru.yandex.practicum.service;
 
 import com.google.protobuf.Empty;
 import io.grpc.Status;
