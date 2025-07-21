@@ -1,4 +1,4 @@
-package ru.yandex.practicum.starter;
+package ru.yandex.practicum.processor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,43 +7,43 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
-import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.KafkaClient;
 import ru.yandex.practicum.KafkaTopicsNames;
-import ru.yandex.practicum.service.AggregatorServiceImpl;
+import ru.yandex.practicum.kafka.SnapshotConsumerKafkaProperties;
+import ru.yandex.practicum.service.SnapshotService;
 
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Component
 @Slf4j
-@RequiredArgsConstructor
-public class AggregatorStarter {
+public class SnapshotProcessor implements Runnable {
+
     private final static Duration POLL_DURATION_TIMEOUT = Duration.ofMillis(1000);
-    private final static String CONSUMER_NAME = "aggregator-consumer";
+    private final static String SNAPSHOT_PROCESSOR_CONSUMER = "snapshot-processor";
 
     private final KafkaClient kafkaClient;
     private final KafkaTopicsNames topicsNames;
-    private final AggregatorServiceImpl aggregatorService;
-    private Producer<String, SpecificRecordBase> producer;
-    private Consumer<String, SpecificRecordBase> consumer;
     private final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
+    private Consumer<String, SpecificRecordBase> consumer;
+    private final SnapshotService snapshotService;
 
-    public void start() {
-        consumer = kafkaClient.getConsumer(CONSUMER_NAME);
-        producer = kafkaClient.getProducer();
+    @Override
+    public void run() {
         try {
-            consumer.subscribe(List.of(topicsNames.getSensors()));
+            consumer = kafkaClient.getConsumer(SNAPSHOT_PROCESSOR_CONSUMER, SnapshotConsumerKafkaProperties.getProperties());
+            consumer.subscribe(List.of(topicsNames.getSnapshots()));
             while (true) {
                 ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(POLL_DURATION_TIMEOUT);
                 int count = 0;
                 for (ConsumerRecord<String, SpecificRecordBase> record : records) {
-                    aggregatorService.handleRecord(record, producer, topicsNames.getSnapshots());
+                    snapshotService.handleRecord(record);
                     kafkaClient.manageOffset(record, count, consumer, currentOffsets);
                     count++;
                 }
@@ -54,15 +54,13 @@ public class AggregatorStarter {
         } catch (Exception e) {
             log.error("Ошибка во время обработки событий от датчиков", e);
         } finally {
-
             try {
-                consumer.commitSync();
-
+                consumer.commitSync(currentOffsets);
             } finally {
-                log.info("Закрываем консьюмер");
-                log.info("Закрываем продюсер");
-                kafkaClient.stopConsumer(CONSUMER_NAME);
+                kafkaClient.stopConsumer(SNAPSHOT_PROCESSOR_CONSUMER);
             }
         }
+
+
     }
 }

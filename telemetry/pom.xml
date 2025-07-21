@@ -17,6 +17,8 @@
         <module>collector</module>
         <module>aggregator</module>
         <module>KafkaClient</module>
+        <module>analyzer</module>
+        <module>hub-router</module>
     </modules>
 
 </project>
