@@ -14,16 +14,13 @@ import ru.yandex.practicum.grpc.telemetry.hubrouter.HubRouterControllerGrpc;
 @RequiredArgsConstructor
 @GrpcService
 public class HubRouterController extends HubRouterControllerGrpc.HubRouterControllerImplBase {
-    public void handleDeviceAction(DeviceActionRequest deviceActionRequest, StreamObserver<Empty> responseObserver) {
+    public void handleDeviceAction(DeviceActionRequest deviceActionRequest, StreamObserver<Empty> observer) {
 
         try {
-            log.info("timestamp={}, fields={}",
-                    deviceActionRequest.getTimestamp(),
-                    deviceActionRequest.getAllFields().toString());
-            responseObserver.onNext(Empty.newBuilder().build());
-            responseObserver.onCompleted();
+            observer.onNext(Empty.newBuilder().build());
+            observer.onCompleted();
         } catch (Exception e) {
-            responseObserver.onError(new StatusRuntimeException(
+            observer.onError(new StatusRuntimeException(
                     Status.INTERNAL
                             .withDescription(e.getLocalizedMessage())
                             .withCause(e)
