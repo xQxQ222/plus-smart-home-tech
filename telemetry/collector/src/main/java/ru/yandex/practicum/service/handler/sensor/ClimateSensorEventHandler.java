@@ -1,12 +1,11 @@
 package ru.yandex.practicum.service.handler.sensor;
 
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.kafka.configuration.KafkaClient;
-import ru.yandex.practicum.kafka.configuration.KafkaTopicsNames;
+import ru.yandex.practicum.KafkaClient;
+import ru.yandex.practicum.KafkaTopicsNames;
+import ru.yandex.practicum.grpc.telemetry.event.ClimateSensorProto;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro;
-import ru.yandex.practicum.model.sensor.ClimateSensorEvent;
-import ru.yandex.practicum.model.sensor.SensorEvent;
-import ru.yandex.practicum.model.sensor.SensorEventType;
 
 @Component
 public class ClimateSensorEventHandler extends BaseSensorEventHandler<ClimateSensorAvro> {
@@ -15,8 +14,8 @@ public class ClimateSensorEventHandler extends BaseSensorEventHandler<ClimateSen
     }
 
     @Override
-    protected ClimateSensorAvro toAvro(SensorEvent sensorEvent) {
-        ClimateSensorEvent event = (ClimateSensorEvent) sensorEvent;
+    protected ClimateSensorAvro toAvro(SensorEventProto sensorEvent) {
+        ClimateSensorProto event = sensorEvent.getClimateSensorEvent();
         return ClimateSensorAvro.newBuilder()
                 .setCo2Level(event.getCo2Level())
                 .setHumidity(event.getHumidity())
@@ -25,7 +24,7 @@ public class ClimateSensorEventHandler extends BaseSensorEventHandler<ClimateSen
     }
 
     @Override
-    public SensorEventType getMessageType() {
-        return SensorEventType.CLIMATE_SENSOR_EVENT;
+    public SensorEventProto.PayloadCase getMessageType() {
+        return SensorEventProto.PayloadCase.CLIMATE_SENSOR_EVENT;
     }
 }
