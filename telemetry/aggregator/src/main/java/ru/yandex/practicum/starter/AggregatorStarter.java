@@ -59,8 +59,7 @@ public class AggregatorStarter {
                 consumer.commitSync();
 
             } finally {
-                log.info("Закрываем консьюмер");
-                log.info("Закрываем продюсер");
+                log.info("Закрытие consumer+producer");
                 kafkaClient.stopConsumer(CONSUMER_NAME);
             }
         }

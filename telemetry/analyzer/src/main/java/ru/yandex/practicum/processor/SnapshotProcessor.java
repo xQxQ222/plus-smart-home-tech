@@ -57,6 +57,7 @@ public class SnapshotProcessor implements Runnable {
             try {
                 consumer.commitSync(currentOffsets);
             } finally {
+                log.info("Закрытие consumer+producer");
                 kafkaClient.stopConsumer(SNAPSHOT_PROCESSOR_CONSUMER);
             }
         }
