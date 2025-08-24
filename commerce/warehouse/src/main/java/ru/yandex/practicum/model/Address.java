@@ -1,0 +1,18 @@
+package ru.yandex.practicum.model;
+
+import lombok.Data;
+import lombok.Getter;
+
+import java.security.SecureRandom;
+import java.util.Random;
+
+
+@Data
+@Getter
+public class Address {
+    private static final String[] ADDRESSES =
+            new String[] {"ADDRESS_1", "ADDRESS_2"};
+
+    public static final String CURRENT_ADDRESS =
+            ADDRESSES[Random.from(new SecureRandom()).nextInt(0, 1)];
+}
