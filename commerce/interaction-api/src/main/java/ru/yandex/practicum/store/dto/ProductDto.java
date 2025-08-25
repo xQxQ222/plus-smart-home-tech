@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.yandex.practicum.store.enums.ProductCategory;
 import ru.yandex.practicum.store.enums.ProductState;
@@ -15,8 +16,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProductDto {
-    @NotNull
+
     private UUID productId;
 
     @NotBlank
@@ -33,7 +35,6 @@ public class ProductDto {
     @NotNull
     private ProductState productState;
 
-    @NotNull
     private ProductCategory productCategory;
 
     @NotNull

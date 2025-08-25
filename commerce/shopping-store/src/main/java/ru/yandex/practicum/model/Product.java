@@ -42,4 +42,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @Column(name = "product_category")
     private ProductCategory productCategory;
+
+    @Column(name = "price")
+    private Double price;
 }
