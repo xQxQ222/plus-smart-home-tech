@@ -8,7 +8,7 @@ import ru.yandex.practicum.feign.client.cart.CartFeignClient;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
-@EnableFeignClients(clients = CartFeignClient.class)
+@EnableFeignClients
 public class ShoppingCartApp {
     public static void main(String[] args) {
         SpringApplication.run(ShoppingCartApp.class, args);

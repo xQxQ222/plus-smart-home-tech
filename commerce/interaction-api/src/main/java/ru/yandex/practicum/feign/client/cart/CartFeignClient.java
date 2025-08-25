@@ -1,5 +1,7 @@
 package ru.yandex.practicum.feign.client.cart;
 
+import feign.FeignException;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.cart.dto.ShoppingCartDto;
@@ -14,17 +16,17 @@ import java.util.UUID;
 public interface CartFeignClient {
 
     @GetMapping
-    ShoppingCartDto getShoppingCart(@RequestParam(name = "username") String username);
+    ShoppingCartDto getShoppingCart(@RequestParam(name = "username") String username) throws FeignException;
 
     @PutMapping
-    ShoppingCartDto putProductsInCart(@RequestParam(name = "username") String username, @RequestBody Map<UUID, Integer> products);
+    ShoppingCartDto putProductsInCart(@RequestParam(name = "username") String username, @RequestBody @NotEmpty Map<UUID, Integer> products) throws FeignException;
 
     @DeleteMapping
-    void deactivateUserCart(@RequestParam(name = "username") String username);
+    void deactivateUserCart(@RequestParam(name = "username") String username) throws FeignException;
 
     @PostMapping("/remove")
-    ShoppingCartDto removeProductsFromCart(@RequestParam(name = "username") String username, @RequestBody List<UUID> productIds);
+    ShoppingCartDto removeProductsFromCart(@RequestParam(name = "username") String username, @RequestBody List<UUID> productIds) throws FeignException;
 
     @PostMapping("/change-quantity")
-    ShoppingCartDto changeProductQuantity(@RequestParam(name = "username") String username, @RequestBody ChangeProductQuantityRequest request);
+    ShoppingCartDto changeProductQuantity(@RequestParam(name = "username") String username, @RequestBody ChangeProductQuantityRequest request) throws FeignException;
 }

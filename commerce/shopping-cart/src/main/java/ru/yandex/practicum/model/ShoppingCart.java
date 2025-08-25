@@ -24,7 +24,7 @@ public class ShoppingCart {
     private String username;
 
     @Column(name = "active", nullable = false)
-    private boolean active;
+    private boolean active = true;
 
     @ElementCollection
     @CollectionTable(name = "shopping_cart_items", joinColumns = @JoinColumn(name = "cart_id"))
