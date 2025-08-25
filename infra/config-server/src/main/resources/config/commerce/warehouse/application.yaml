@@ -6,7 +6,7 @@ eureka:
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:6544/warehouse-db
+    url: jdbc:postgresql://localhost:7543/warehouse_db
     username: postgres
     password: postgres
   jpa:

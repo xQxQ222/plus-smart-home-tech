@@ -83,7 +83,7 @@ services:
     image: postgres:16.1
     container_name: warehouse-db
     ports:
-      - "6544:5432"
+      - "7543:5432"
     environment:
       - POSTGRES_DB=warehouse_db
       - POSTGRES_USER=postgres
