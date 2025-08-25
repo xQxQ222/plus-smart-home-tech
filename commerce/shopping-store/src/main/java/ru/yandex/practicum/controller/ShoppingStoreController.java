@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.feign.api.StoreApi;
 import ru.yandex.practicum.service.ShoppingStoreService;
 import ru.yandex.practicum.store.dto.ProductDto;
 import ru.yandex.practicum.store.enums.ProductCategory;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @RequestMapping(path = "/api/v1/shopping-store")
 @RequiredArgsConstructor
 @Slf4j
-public class ShoppingStoreController {
+public class ShoppingStoreController implements StoreApi {
 
     private final ShoppingStoreService storeService;
 

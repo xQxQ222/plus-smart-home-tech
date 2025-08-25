@@ -5,12 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import ru.yandex.practicum.feign.client.cart.CartClient;
+import ru.yandex.practicum.feign.client.store.StoreFeignClient;
 import ru.yandex.practicum.feign.client.warehouse.WarehouseFeignClient;
 
 @SpringBootApplication
 @EnableConfigurationProperties
 @ConfigurationPropertiesScan
-@EnableFeignClients(clients = WarehouseFeignClient.class)
+@EnableFeignClients
 public class WarehouseApp {
     public static void main(String[] args) {
         SpringApplication.run(WarehouseApp.class, args);

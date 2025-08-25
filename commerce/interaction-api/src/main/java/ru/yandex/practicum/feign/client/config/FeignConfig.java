@@ -7,7 +7,7 @@ import ru.yandex.practicum.feign.client.decoder.FeignErrorDecoder;
 public class FeignConfig {
     @Bean
     public Feign.Builder feignBuilder() {
-        return feignBuilder()
+        return Feign.builder()
                 .errorDecoder(new FeignErrorDecoder());
     }
 }

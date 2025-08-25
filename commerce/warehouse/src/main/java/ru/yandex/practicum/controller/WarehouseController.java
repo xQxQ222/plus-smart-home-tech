@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.cart.dto.ShoppingCartDto;
+import ru.yandex.practicum.feign.api.WarehouseApi;
 import ru.yandex.practicum.service.WarehouseService;
 import ru.yandex.practicum.warehouse.dto.AddressDto;
 import ru.yandex.practicum.warehouse.dto.BookedProductsDto;
@@ -14,7 +15,7 @@ import ru.yandex.practicum.warehouse.request.NewProductInWarehouseRequest;
 @RequestMapping(path = "/api/v1/warehouse")
 @RequiredArgsConstructor
 @Slf4j
-public class WarehouseController {
+public class WarehouseController implements WarehouseApi {
 
     private final WarehouseService service;
 

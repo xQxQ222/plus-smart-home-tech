@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.cart.dto.ShoppingCartDto;
 import ru.yandex.practicum.cart.request.ChangeProductQuantityRequest;
+import ru.yandex.practicum.feign.api.CartApi;
+import ru.yandex.practicum.feign.client.cart.CartClient;
 import ru.yandex.practicum.service.ShoppingCartService;
 
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.UUID;
 @RequestMapping(path = "/api/v1/shopping-cart")
 @RequiredArgsConstructor
 @Slf4j
-public class ShoppingCartController {
+public class ShoppingCartController implements CartApi {
     private final ShoppingCartService cartService;
 
     @GetMapping
