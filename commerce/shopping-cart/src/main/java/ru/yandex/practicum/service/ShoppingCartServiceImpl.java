@@ -60,6 +60,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         log.debug("Деактивируем корзину пользователя {}", username);
         cart.setActive(false);
+        repository.save(cart);
     }
 
     @Override
@@ -91,6 +92,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ShoppingCart createNewShoppingCart(String username) {
         ShoppingCart newCart = ShoppingCart.builder()
                 .username(username)
+                .active(true)
                 .build();
         return repository.save(newCart);
     }

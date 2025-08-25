@@ -1,4 +1,4 @@
-package ru.yandex.practicum.store.exception.handler;
+package ru.yandex.practicum.controller.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
