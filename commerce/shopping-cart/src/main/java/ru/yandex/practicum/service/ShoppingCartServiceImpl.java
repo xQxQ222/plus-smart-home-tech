@@ -14,6 +14,7 @@ import ru.yandex.practicum.mapper.ShoppingCartMapper;
 import ru.yandex.practicum.model.ShoppingCart;
 import ru.yandex.practicum.repository.ShoppingCartRepository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -93,6 +94,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart newCart = ShoppingCart.builder()
                 .username(username)
                 .active(true)
+                .products(new HashMap<>())
                 .build();
         return repository.save(newCart);
     }
