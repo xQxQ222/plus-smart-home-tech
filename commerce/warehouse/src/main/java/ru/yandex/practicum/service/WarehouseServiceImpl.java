@@ -41,6 +41,7 @@ public class WarehouseServiceImpl implements WarehouseService {
                 request.getDimension().getDepth());
 
         WarehouseElement newElement = WarehouseElement.builder()
+                .productId(request.getProductId())
                 .weight(request.getWeight())
                 .fragile(request.getFragile())
                 .dimension(dimension)

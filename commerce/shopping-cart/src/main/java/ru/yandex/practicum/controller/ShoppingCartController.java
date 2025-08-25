@@ -1,5 +1,6 @@
 package ru.yandex.practicum.controller;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class ShoppingCartController {
     }
 
     @PutMapping
-    public ShoppingCartDto putProductsInCart(@RequestParam(name = "username") String username, @RequestBody Map<UUID, Integer> products) {
+    public ShoppingCartDto putProductsInCart(@RequestParam(name = "username") String username, @RequestBody @NotEmpty Map<UUID, Integer> products) {
         log.info("Пришел PUT запрос /api/v1/shopping-cart от пользователя {} с телом: {}", username, products);
         ShoppingCartDto cart = cartService.putProductIntoCart(username, products);
         log.info("Отправлен ответ на запрос PUT /api/v1/shopping-cart пользователь {} с телом: {}", username, cart);
