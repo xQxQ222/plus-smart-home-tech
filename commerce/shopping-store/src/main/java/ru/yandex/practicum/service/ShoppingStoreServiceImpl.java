@@ -56,6 +56,7 @@ public class ShoppingStoreServiceImpl implements ShoppingStoreService {
             return false;
         }
         productFromDb.setProductState(ProductState.DEACTIVATE);
+        productRepository.save(mapper.toProductDomain(productFromDb));
         log.debug("Удаление товара. Товар с id {} стал недоступным", productId);
         return true;
     }

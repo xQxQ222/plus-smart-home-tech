@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.service.ShoppingStoreService;
 import ru.yandex.practicum.store.dto.ProductDto;
 import ru.yandex.practicum.store.enums.ProductCategory;
+import ru.yandex.practicum.store.enums.QuantityState;
 import ru.yandex.practicum.store.request.SetProductQuantityStateRequest;
 
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class ShoppingStoreController {
     private final ShoppingStoreService storeService;
 
     @GetMapping
-    public Page<ProductDto> GetProductsByCategory(@RequestParam ProductCategory productCategory, @PageableDefault(sort = "productName") Pageable pageable) {
+    public Page<ProductDto> GetProductsByCategory(@RequestParam(name = "category") ProductCategory productCategory, @PageableDefault(sort = "productName") Pageable pageable) {
         log.info("Пришел GET запрос /api/v1/shopping-store с параметрами: Product category - {}, Pageable - {}", productCategory, pageable);
         Page<ProductDto> products = storeService.getProductsPageByCategory(productCategory, pageable);
         log.info("Отправлен ответ на GET запрос /api/v1/shopping-store с телом: {}", products);
@@ -55,10 +56,10 @@ public class ShoppingStoreController {
     }
 
     @PostMapping("/quantityState")
-    public Boolean updateQuantityState(@RequestBody @Valid SetProductQuantityStateRequest request) {
-        log.info("Пришел POST запрос /api/v1/shopping-store/quantityState");
+    public Boolean updateQuantityState(@ModelAttribute SetProductQuantityStateRequest request) {
+        log.info("Пришел POST запрос /api/v1/shopping-store/quantityState?productId={}&quantityState={}",request.getProductId(), request.getQuantityState());
         Boolean isUpdated = storeService.setProductQuantity(request);
-        log.info("Отправлен ответ на запрос POST /api/v1/shopping-store/quantityState. Успешно: {}", isUpdated);
+        log.info("Отправлен ответ на запрос POST /api/v1/shopping-store/quantityState?quantityState?productId={}&quantityState={}. Успешно: {}",request.getProductId(), request.getQuantityState(), isUpdated);
         return isUpdated;
     }
 

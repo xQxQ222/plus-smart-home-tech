@@ -8,6 +8,7 @@ import ru.yandex.practicum.store.dto.ProductDto;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ShoppingStoreMapper {
+    @Mapping(target = "price", source = "price")
     ProductDto toProductDto(Product productDomain);
 
     @Mapping(target = "price", source = "price")
