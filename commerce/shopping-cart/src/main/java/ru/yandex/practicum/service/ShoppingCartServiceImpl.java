@@ -39,7 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         checkProductQuantityInWarehouse(shoppingCart.getShoppingCartId(), products);
         Map<UUID, Integer> cartProducts = shoppingCart.getProducts();
         for (UUID id : products.keySet()) {
-            if (products.containsKey(id)) {
+            if (cartProducts.containsKey(id)) {
                 int currentQuantity = cartProducts.get(id);
                 currentQuantity += products.get(id);
                 cartProducts.put(id, currentQuantity);
