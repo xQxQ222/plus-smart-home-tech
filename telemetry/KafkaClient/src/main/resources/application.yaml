@@ -1,0 +1,6 @@
+kafka:
+  topic:
+    telemetry:
+      sensors: telemetry.sensors.v1
+      hubs: telemetry.hubs.v1
+      snapshots: telemetry.snapshots.v1

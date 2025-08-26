@@ -24,6 +24,27 @@ import java.util.Properties;
 @Slf4j
 public class KafkaClientConfiguration {
 
+    @Value("${kafka.consumer.group-id}")
+    private String groupId;
+
+    @Value("${kafka.consumer.client-id}")
+    private String clientId;
+
+    @Value("${kafka.bootstrap-servers}")
+    private String bootstrapServers;
+
+    @Value("${kafka.producer.key-serializer}")
+    private String producerKeySerializer;
+
+    @Value("${kafka.producer.value-serializer}")
+    private String producerValueSerializer;
+
+    @Value("${kafka.consumer.key-deserializer}")
+    private String consumerKeyDeserializer;
+
+    @Value("${kafka.consumer.value-deserializer}")
+    private String consumerValueDeserializer;
+
     @Bean
     KafkaClient getClient() {
         return new KafkaClient() {
@@ -31,26 +52,6 @@ public class KafkaClientConfiguration {
 
             private final Map<String, Consumer<String, SpecificRecordBase>> consumerMap = new HashMap<>();
 
-            @Value("${kafka.consumer.group-id}")
-            private String groupId;
-
-            @Value("${kafka.consumer.client-id}")
-            private String clientId;
-
-            @Value("${kafka.bootstrap-servers}")
-            private String bootstrapServers;
-
-            @Value("${kafka.producer.key-serializer}")
-            private String producerKeySerializer;
-
-            @Value("${kafka.producer.value-serializer}")
-            private String producerValueSerializer;
-
-            @Value("${kafka.consumer.key-deserializer}")
-            private String consumerKeyDeserializer;
-
-            @Value("${kafka.consumer.value-deserializer}")
-            private String consumerValueDeserializer;
 
             @Override
             public Producer<String, SpecificRecordBase> getProducer() {

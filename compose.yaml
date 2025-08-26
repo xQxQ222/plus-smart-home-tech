@@ -34,13 +34,58 @@ services:
                              --bootstrap-server kafka:29092'"
     init: true
 
-  postgres:
+  analyzer-db:
     image: postgres:16.1
-    container_name: postgres
+    container_name: analyzer-db
     ports:
       - "6541:5432"
     environment:
       - POSTGRES_DB=analyzer_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  shopping-cart-db:
+    image: postgres:16.1
+    container_name: shopping-cart-db
+    ports:
+      - "6542:5432"
+    environment:
+      - POSTGRES_DB=cart_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  shopping-store-db:
+    image: postgres:16.1
+    container_name: shopping-store-db
+    ports:
+      - "6543:5432"
+    environment:
+      - POSTGRES_DB=store_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  warehouse-db:
+    image: postgres:16.1
+    container_name: warehouse-db
+    ports:
+      - "7543:5432"
+    environment:
+      - POSTGRES_DB=warehouse_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     healthcheck:

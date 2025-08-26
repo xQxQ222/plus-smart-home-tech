@@ -58,6 +58,7 @@ public class HubEventProcessor implements Runnable {
             try {
                 consumer.commitSync(currentOffsets);
             } finally {
+                log.info("Закрытие consumer+producer");
                 kafkaClient.stopConsumer(HUB_EVENT_PROCESSOR_CONSUMER);
             }
         }
