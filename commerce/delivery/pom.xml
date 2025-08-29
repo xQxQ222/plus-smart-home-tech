@@ -87,6 +87,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker-qual</artifactId>
@@ -101,7 +102,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.yandex.practicum.ShoppingCartApp</mainClass>
+                    <mainClass>ru.yandex.practicum.DeliveryApp</mainClass>
                     <layout>JAR</layout>
                 </configuration>
             </plugin>

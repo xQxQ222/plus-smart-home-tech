@@ -49,7 +49,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.yandex.practicum.DiscoveryServer</mainClass>
+                    <mainClass>ru.yandex.practicum.GatewayApp</mainClass>
                     <layout>JAR</layout>
                 </configuration>
             </plugin>

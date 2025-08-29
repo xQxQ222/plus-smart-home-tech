@@ -101,7 +101,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.yandex.practicum.ShoppingCartApp</mainClass>
+                    <mainClass>ru.yandex.practicum.OrderApp</mainClass>
                     <layout>JAR</layout>
                 </configuration>
             </plugin>
