@@ -1,5 +1,7 @@
 package ru.yandex.practicum.feign.api;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -8,7 +10,12 @@ import ru.yandex.practicum.cart.dto.ShoppingCartDto;
 import ru.yandex.practicum.warehouse.dto.AddressDto;
 import ru.yandex.practicum.warehouse.dto.BookedProductsDto;
 import ru.yandex.practicum.warehouse.request.AddProductToWarehouseRequest;
+import ru.yandex.practicum.warehouse.request.AssemblyProductsForOrderRequest;
 import ru.yandex.practicum.warehouse.request.NewProductInWarehouseRequest;
+import ru.yandex.practicum.warehouse.request.ShippedToDeliveryRequest;
+
+import java.util.Map;
+import java.util.UUID;
 
 public interface WarehouseApi {
     @PutMapping
@@ -22,4 +29,13 @@ public interface WarehouseApi {
 
     @GetMapping("/address")
     AddressDto getWarehouseAddress();
+
+    @PostMapping("/shipped")
+    void shipOrderToDelivery(@Valid @RequestBody ShippedToDeliveryRequest request);
+
+    @PostMapping("/return")
+    void returnProductsToWarehouse(@RequestBody @NotEmpty Map<UUID, Integer> products);
+
+    @PostMapping("/assembly")
+    BookedProductsDto assemblyProducts(@Valid @RequestBody AssemblyProductsForOrderRequest request);
 }
