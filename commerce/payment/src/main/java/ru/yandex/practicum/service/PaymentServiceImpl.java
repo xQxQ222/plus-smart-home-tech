@@ -56,7 +56,7 @@ public class PaymentServiceImpl implements PaymentService {
     public void refundPayment(UUID paymentId) {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new PaymentNotFoundException(paymentId));
-        if(!payment.getPaymentStatus().equals(PaymentStatus.PENDING)){
+        if (payment.getPaymentStatus() != PaymentStatus.PENDING) {
             throw new IncorrectPaymentStateException("Для изменения статуса оплаты она должна находиться в статусе PENDING");
         }
         payment.setPaymentStatus(PaymentStatus.SUCCESS);
@@ -80,7 +80,7 @@ public class PaymentServiceImpl implements PaymentService {
     public void paymentFailed(UUID paymentId) {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new PaymentNotFoundException(paymentId));
-        if(!payment.getPaymentStatus().equals(PaymentStatus.PENDING)){
+        if (payment.getPaymentStatus() != PaymentStatus.PENDING) {
             throw new IncorrectPaymentStateException("Для изменения статуса оплаты она должна находиться в статусе PENDING");
         }
         payment.setPaymentStatus(PaymentStatus.FAILED);

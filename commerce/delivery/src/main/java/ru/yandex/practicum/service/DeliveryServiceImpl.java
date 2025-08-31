@@ -44,7 +44,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     public void successfulDelivery(UUID deliveryId) {
         Delivery delivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new NoDeliveryFoundException(deliveryId));
-        if (!delivery.getDeliveryState().equals(DeliveryState.IN_PROGRESS)) {
+        if (delivery.getDeliveryState() != DeliveryState.IN_PROGRESS) {
             throw new IncorrectDeliveryStatusException("Доставка должна находиться в статусе IN_PROGRESS");
         }
         delivery.setDeliveryState(DeliveryState.DELIVERED);
@@ -56,7 +56,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     public void pickProductToDelivery(UUID deliveryId) {
         Delivery delivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new NoDeliveryFoundException(deliveryId));
-        if (!delivery.getDeliveryState().equals(DeliveryState.CREATED)) {
+        if (delivery.getDeliveryState() != DeliveryState.CREATED) {
             throw new IncorrectDeliveryStatusException("Для отправки товара доставка должна находиться в статусе CREATED");
         }
         delivery.setDeliveryState(DeliveryState.IN_PROGRESS);
@@ -68,7 +68,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     public void failedDelivery(UUID deliveryId) {
         Delivery delivery = deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new NoDeliveryFoundException(deliveryId));
-        if (!delivery.getDeliveryState().equals(DeliveryState.IN_PROGRESS)) {
+        if (delivery.getDeliveryState() != DeliveryState.IN_PROGRESS) {
             throw new IncorrectDeliveryStatusException("Доставка должна находиться в статусе IN_PROGRESS");
         }
         delivery.setDeliveryState(DeliveryState.FAILED);

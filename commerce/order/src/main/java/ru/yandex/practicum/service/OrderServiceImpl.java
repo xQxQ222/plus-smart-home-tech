@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto orderPayment(UUID orderId) {
         Order order = getOrderById(orderId);
-        if (!order.getState().equals(OrderState.NEW)) {
+        if (order.getState() != OrderState.NEW) {
             throw new IncorrectDeliveryStatusException("Для осуществления оплаты заказа, его статус должен быть NEW");
         }
         PaymentDto paymentDto = paymentFeignClient.paymentFormation(orderMapper.toOrderDto(order));
@@ -94,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto orderPaymentFailed(UUID orderId) {
         Order order = getOrderById(orderId);
-        if (!order.getState().equals(OrderState.NEW)) {
+        if (order.getState() != OrderState.NEW) {
             throw new IncorrectDeliveryStatusException("Для осуществления оплаты заказа, его статус должен быть NEW");
         }
         order.setState(OrderState.PAYMENT_FAILED);
@@ -105,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto orderDelivery(UUID orderId) {
         Order order = getOrderById(orderId);
 
-        if (!order.getState().equals(OrderState.ASSEMBLED)) {
+        if (order.getState() != OrderState.ASSEMBLED) {
             throw new IncorrectDeliveryStatusException("Для осуществления доставки заказа, его статус должен быть ASSEMBLED");
         }
 
@@ -125,7 +125,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto orderDeliveryFailed(UUID orderId) {
         Order order = getOrderById(orderId);
 
-        if (!order.getState().equals(OrderState.ASSEMBLED)) {
+        if (order.getState() != OrderState.ASSEMBLED) {
             throw new IncorrectDeliveryStatusException("Для осуществления доставки заказа, его статус должен быть ASSEMBLED");
         }
 
@@ -137,7 +137,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto completeOrder(UUID orderId) {
         Order order = getOrderById(orderId);
-        if (!order.getState().equals(OrderState.DELIVERED)) {
+        if (order.getState() != OrderState.DELIVERED) {
             throw new IncorrectDeliveryStatusException("Чтобы завершить заказ, его статус должен быть DELIVERED");
         }
         order.setState(OrderState.COMPLETED);
@@ -163,10 +163,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto orderAssembly(UUID orderId) {
         Order order = getOrderById(orderId);
-        if (!order.getState().equals(OrderState.PAID)) {
+        if (order.getState() != OrderState.PAID) {
             throw new IncorrectOrderStatusException("Для начала сборки заказ должен быть оплачен");
         }
-        AssemblyProductsForOrderRequest request = new AssemblyProductsForOrderRequest(order.getProducts(), order.getOrderId());
+        AssemblyProductsForOrderRequest request = new AssemblyProductsForOrderRequest(order.getProducts(), order.getId());
         warehouseFeign.assemblyProducts(request);
 
         order.setState(OrderState.ASSEMBLED);
@@ -176,7 +176,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto orderAssemblyFailed(UUID orderId) {
         Order order = getOrderById(orderId);
-        if (!order.getState().equals(OrderState.PAID)) {
+        if (order.getState() != OrderState.PAID) {
             throw new IncorrectOrderStatusException("Для начала сборки заказ должен быть оплачен");
         }
         order.setState(OrderState.ASSEMBLY_FAILED);

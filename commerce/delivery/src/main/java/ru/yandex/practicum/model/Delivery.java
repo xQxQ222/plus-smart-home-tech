@@ -17,8 +17,8 @@ public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "delivery_id")
-    private UUID deliveryId;
+    @Column(name = "id")
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "from_address_id")

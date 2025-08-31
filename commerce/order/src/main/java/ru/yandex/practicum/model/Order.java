@@ -18,8 +18,8 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "order_id")
-    private UUID orderId;
+    @Column(name = "id")
+    private UUID id;
 
     @Column(name = "shopping_cart_id", nullable = false)
     private UUID shoppingCartId;
@@ -60,7 +60,7 @@ public class Order {
     private DeliveryAddress address;
 
     @ElementCollection
-    @CollectionTable(name = "order_products", joinColumns = @JoinColumn(name = "order_id"))
+    @CollectionTable(name = "order_products", joinColumns = @JoinColumn(name = "id"))
     @MapKeyColumn(name = "product_id")
     @Column(name = "products_quantity")
     private Map<UUID, Integer> products;

@@ -16,8 +16,8 @@ import java.util.UUID;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "payment_id")
-    private UUID paymentId;
+    @Column(name = "id")
+    private UUID id;
 
     @Column(name = "orderId")
     private UUID orderId;

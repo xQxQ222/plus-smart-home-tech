@@ -14,8 +14,8 @@ import lombok.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
-    private Long addressId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "country")
     private String country;
