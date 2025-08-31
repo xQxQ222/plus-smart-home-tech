@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.cart.dto.ShoppingCartDto;
 import ru.yandex.practicum.cart.request.ChangeProductQuantityRequest;
 import ru.yandex.practicum.feign.api.CartApi;
-import ru.yandex.practicum.feign.client.cart.CartClient;
 import ru.yandex.practicum.service.ShoppingCartService;
 
 import java.util.List;
