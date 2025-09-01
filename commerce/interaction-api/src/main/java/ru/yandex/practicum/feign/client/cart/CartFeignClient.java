@@ -5,6 +5,6 @@ import ru.yandex.practicum.feign.api.CartApi;
 import ru.yandex.practicum.feign.client.config.FeignConfig;
 
 @FeignClient(name = "shopping-cart", path = "/api/v1/shopping-cart", configuration = FeignConfig.class)
-public interface CartClient extends CartApi {
+public interface CartFeignClient extends CartApi {
 
 }
